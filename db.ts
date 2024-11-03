@@ -3,7 +3,6 @@ import fs from "fs";
 import dotenv from "dotenv";
 dotenv.config();
 
-
 const pool = new Pool({
     ssl: {
         rejectUnauthorized: true,

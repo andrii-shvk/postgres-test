@@ -3,12 +3,16 @@ import pool from "../db";
 
 class PostController {
     async createPost(req: Request, res: Response) {
-        const { title, content, userId } = req.body;
-        const newPost = await pool.query(
-            "INSERT INTO post (title, content, user_id) values ($1, $2, $3) RETURNING *",
-            [title, content, userId]
-        );
-        res.json(newPost.rows[0]);
+        try {
+            const { title, content, userId } = req.body;
+            const newPost = await pool.query(
+                "INSERT INTO post (title, content, user_id) values ($1, $2, $3) RETURNING *",
+                [title, content, userId]
+            );
+            res.json(newPost.rows[0]);
+        } catch(e) {
+            console.log(e)
+        }
     }
 
     async getPostsByUser(req: Request, res: Response) {

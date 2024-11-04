@@ -1,11 +1,12 @@
 const { Pool } = require("pg");
 const fs = require("fs");
 require("dotenv").config();
+// закоммитить гитхаб, создать новый сервер EC2 и подключиться к RDS database testDB
 
 const pool = new Pool({
     ssl: {
         rejectUnauthorized: true,
-        ca: fs.readFileSync("./us-east-2-bundle.pem").toString(),
+        ca: fs.readFileSync("./certs/us-east-2-bundle.pem").toString(),
     },
     user: process.env.DB_USER || "postgres",
     password: process.env.DB_PASSWORD || "",

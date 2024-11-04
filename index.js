@@ -6,7 +6,7 @@ const postRouter = require("./routes/post.routes");
 const dbPool = require("./db.js");
 dotenv.config();
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8001;
 
 const app = express();
 app.use(express.json());

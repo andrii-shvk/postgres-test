@@ -1,8 +1,7 @@
-import { Request, Response } from "express";
-import pool from "../db";
+const pool = require("../db");
 
 class UserController {
-    async createUser(req: Request, res: Response): Promise<void> {
+    async createUser(req, res) {
         const { name, surname } = req.body;
         console.log(name, surname);
         const newPerson = await pool.query(
@@ -11,18 +10,18 @@ class UserController {
         );
         res.json(newPerson.rows[0]);
     }
-    async getUsers(req: Request, res: Response): Promise<void> {
+    async getUsers(req, res) {
         const user = await pool.query("SELECT * FROM person");
         res.json(user.rows);
     }
-    async getOneUser(req: Request, res: Response): Promise<void> {
+    async getOneUser(req, res) {
         const id = req.params.id;
         const user = await pool.query("SELECT * FROM person where id = $1", [
             id,
         ]);
         res.json(user.rows[0]);
     }
-    async updateUser(req: Request, res: Response): Promise<void> {
+    async updateUser(req, res) {
         const { id, name, surname } = req.body;
         const user = await pool.query(
             "UPDATE person set name = $1, surname = $2 where id = $3 RETURNING *",
@@ -30,11 +29,11 @@ class UserController {
         );
         res.json(user.rows[0]);
     }
-    async deleteUser(req: Request, res: Response): Promise<void> {
+    async deleteUser(req, res) {
         const id = req.params.id;
         const user = await pool.query("DELETE from person where id = $1", [id]);
         res.json(user.rows[0]);
     }
 }
 
-export default UserController;
+module.exports = new UserController();

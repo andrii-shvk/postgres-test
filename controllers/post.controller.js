@@ -1,8 +1,7 @@
-import { Request, Response } from "express";
-import pool from "../db";
+const pool = require("../db");
 
 class PostController {
-    async createPost(req: Request, res: Response) {
+    async createPost(req, res) {
         try {
             const { title, content, userId } = req.body;
             const newPost = await pool.query(
@@ -10,16 +9,19 @@ class PostController {
                 [title, content, userId]
             );
             res.json(newPost.rows[0]);
-        } catch(e) {
-            console.log(e)
+        } catch (e) {
+            console.log(e);
         }
     }
 
-    async getPostsByUser(req: Request, res: Response) {
+    async getPostsByUser(req, res) {
         const id = req.query.id;
-        const posts = await pool.query("select * from post where user_id = $1", [id]);
-        res.json(posts.rows)
+        const posts = await pool.query(
+            "select * from post where user_id = $1",
+            [id]
+        );
+        res.json(posts.rows);
     }
 }
 
-export default PostController;
+module.exports = new PostController();

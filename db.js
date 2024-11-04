@@ -1,7 +1,6 @@
-import { Pool } from "pg";
-import fs from "fs";
-import dotenv from "dotenv";
-dotenv.config();
+const { Pool } = require("pg");
+const fs = require("fs");
+require("dotenv").config();
 
 const pool = new Pool({
     ssl: {
@@ -15,4 +14,4 @@ const pool = new Pool({
     database: process.env.DB_DATABASE || "mydb",
 });
 
-export default pool;
+module.exports = pool;
